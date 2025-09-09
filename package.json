@@ -1,0 +1,12 @@
+{
+  "name": "pet-adoption-api",
+  "version": "1.0.0",
+  "description": "API de adoção de pets",
+  "main": "index.js",
+  "dependencies": {
+    "sqlite3": "^5.0.2"
+  },
+  "scripts": {
+    "start": "node api/pets.js"
+  }
+}
