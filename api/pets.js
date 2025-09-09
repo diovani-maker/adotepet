@@ -4,21 +4,22 @@ module.exports = (req, res) => {
   const { method } = req;
 
   if (method === 'GET') {
+    console.log('Requisição GET recebida');
     db.all("SELECT * FROM pets WHERE adopted = 0", [], (err, rows) => {
       if (err) {
+        console.error('Erro ao consultar pets:', err);
         res.status(500).json({ error: err.message });
         return;
       }
+
+      console.log('Pets encontrados:', rows); // Log dos pets encontrados
       res.status(200).json(rows);
     });
   } else if (method === 'POST') {
     const { name, age, species } = req.body;
-
-    // Adicionando log para verificar os dados recebidos no POST
-    console.log('Recebendo dados do pet:', req.body);  // Adicionando log
-
     if (!name || !age || !species) {
-      return res.status(400).json({ error: 'Por favor, forneça o nome, idade e espécie do pet.' });
+      res.status(400).json({ error: 'Por favor, forneça o nome, idade e espécie do pet.' });
+      return;
     }
 
     const stmt = db.prepare("INSERT INTO pets (name, age, species, adopted) VALUES (?, ?, ?, ?)");
