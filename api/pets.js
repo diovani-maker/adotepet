@@ -13,9 +13,12 @@ module.exports = (req, res) => {
     });
   } else if (method === 'POST') {
     const { name, age, species } = req.body;
+
+    // Adicionando log para verificar os dados recebidos no POST
+    console.log('Recebendo dados do pet:', req.body);  // Adicionando log
+
     if (!name || !age || !species) {
-      res.status(400).json({ error: 'Por favor, forneça o nome, idade e espécie do pet.' });
-      return;
+      return res.status(400).json({ error: 'Por favor, forneça o nome, idade e espécie do pet.' });
     }
 
     const stmt = db.prepare("INSERT INTO pets (name, age, species, adopted) VALUES (?, ?, ?, ?)");
